@@ -12,6 +12,21 @@ import javax.swing.*;
 
 public class DeteccionMovimiento {
 	public static void main(String[] args) throws FrameGrabber.Exception {
+		
+		MandoTelevision mando = new MandoTelevision();
+		MandoVoz voz = new MandoVoz(mando);
+
+		Thread hiloVoz = new Thread(() -> {
+			try {
+				voz.escucharInstrucciones();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
+		
+		hiloVoz.setDaemon(true);
+		hiloVoz.start();
+		
 		OpenCVFrameConverter.ToMat convertidor = new OpenCVFrameConverter.ToMat();
 		// Abrir la cámara
 		VideoCapture captura = new VideoCapture(0);
@@ -20,7 +35,7 @@ public class DeteccionMovimiento {
 			captura.close();
 			convertidor.close();
 			return;
-			
+
 		}
 		Mat fotograma = new Mat();
 		Mat fotogramaPrevio = new Mat();
@@ -93,6 +108,6 @@ public class DeteccionMovimiento {
 		lienzo.dispose();
 		captura.close();
 		convertidor.close();
-		
+
 	}
 }
