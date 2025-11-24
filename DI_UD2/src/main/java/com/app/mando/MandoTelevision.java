@@ -32,7 +32,7 @@ public class MandoTelevision {
 			this.volumen--;
 			this.volumenSync = System.currentTimeMillis();
 		} else {
-			System.out.println("El volumen ya está en 0 y no se puede bajar más.");
+			System.out.println("Volumen al mínimo");
 		}
 	}
 
